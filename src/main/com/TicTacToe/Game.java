@@ -10,10 +10,7 @@ public class Game {
     private Field[] board;
 
     public Game() {
-        this.board = new Field[9];
-        for (int i = 1; i <= 9; i++) {
-            this.board[i - 1] = new Field(i);
-        }
+        initializeNewBoard();
     }
 
     public Field[] getBoard() {
@@ -27,6 +24,13 @@ public class Game {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void initializeNewBoard(){
+        this.board = new Field[9];
+        for (int i = 1; i <= 9; i++) {
+            this.board[i - 1] = new Field(i);
         }
     }
 
@@ -65,6 +69,7 @@ public class Game {
         } else if (currentCross.toUpperCase().equals("XXX")) {
             return "X";
         }
+        currentCross = "";
         for(int i = 2; i < 8; i+=2) {
             currentCross = currentCross.concat(this.board[i].content);
         }

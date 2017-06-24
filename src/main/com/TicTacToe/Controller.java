@@ -22,6 +22,10 @@ public class Controller {
         return game.checkForWinConditions();
     }
 
+    public void initializeNewBoard(){
+        game.initializeNewBoard();
+    }
+
     public boolean checkForDraw(){
         return game.checkForDraw();
     }

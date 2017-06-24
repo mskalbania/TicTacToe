@@ -62,6 +62,7 @@ public class Printer {
     }
 
     private void startGame() {
+        controller.initializeNewBoard();
         printBoard();
         while (true) {
             player1Move();

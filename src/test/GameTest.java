@@ -15,9 +15,9 @@ public class GameTest {
 
     @Test
     public void shouldReturnXWhenRowXWinConditionsMatched() {
-        for (int i = 1; i <= 3; i++) {
-            game.setField(i, "X");
-        }
+        game.setField(1,"X");
+        game.setField(2,"X");
+        game.setField(3,"X");
         assertThat(game.checkForWinConditions()).isEqualTo("X");
     }
 
