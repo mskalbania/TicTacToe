@@ -26,7 +26,7 @@ public class Printer {
             switch (action) {
                 case 1:
                     startGame();
-                    printMenu();
+                    quit = true;
                     break;
                 case 2:
                     System.out.println("EXITING...");
