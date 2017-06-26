@@ -61,7 +61,7 @@ public class ServerController {
                     break;
                 }
             }
-            server.writeToUser("INVALID");
+            server.writeToUser("INVALID\n");
         }
     }
 
@@ -73,7 +73,7 @@ public class ServerController {
                 int field = scanner.nextInt();
                 if (game.setField(field, "X")) {
                     printer.showBoard();
-                    server.writeToUser(getBoardAsString());
+                    server.writeToUser(getBoardAsString() + "\n");
                     gameState = PLAYER_O_MOVE;
                     break;
                 } else {
@@ -107,7 +107,7 @@ public class ServerController {
     private boolean checkForDraw() throws IOException {
         if (game.checkForDraw()) {
             printer.informOfDraw();
-            server.writeToUser("DRAW");
+            server.writeToUser("DRAW\n");
             return true;
         }
         return false;
@@ -117,12 +117,13 @@ public class ServerController {
         String check = game.checkForWinConditions();
         if (check.equals("X")) {
             printer.informPlayerXWin();
-            server.writeToUser("WON X");
+            server.writeToUser("WON X\n");
             return true;
         }
         if (check.equals("O")) {
             printer.informPlayerOWin();
-            server.writeToUser("WON O");
+            printer.showBoard();
+            server.writeToUser("WON O\n");
             return true;
         }
         return false;
