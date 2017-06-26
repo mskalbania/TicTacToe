@@ -19,7 +19,7 @@ public class Server {
     }
 
     public void start() throws IOException {
-        System.out.println("SERVER STARTED" + serverSocket.getLocalPort());
+        System.out.println("SERVER LISTENING ON PORT " + serverSocket.getLocalPort());
         System.out.println("CONNECTING...");
         establishConnection();
     }
