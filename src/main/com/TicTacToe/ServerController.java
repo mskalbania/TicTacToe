@@ -19,7 +19,6 @@ public class ServerController {
         END_OF_GAME,
     }
 
-
     public ServerController(Server server, Game game, TerminalPrinter printer) throws IOException {
         this.server = server;
         this.printer = printer;
@@ -36,12 +35,11 @@ public class ServerController {
             switch (gameState) {
                 case PLAYER_X_MOVE: {
                     playerXMove();
-                    checkForEndOfGame();
                     break;
                 }
-                case PLAYER_O_MOVE:{
+                case PLAYER_O_MOVE: {
                     playerOMove();
-                    checkForEndOfGame();
+                    isEndOfGame();
                     break;
                 }
             }
@@ -73,8 +71,10 @@ public class ServerController {
                 int field = scanner.nextInt();
                 if (game.setField(field, "X")) {
                     printer.showBoard();
-                    server.writeToUser(getBoardAsString() + "\n");
-                    gameState = PLAYER_O_MOVE;
+                    if (!isEndOfGame()) {
+                        server.writeToUser(getBoardAsString() + "\n");
+                        gameState = PLAYER_O_MOVE;
+                    }
                     break;
                 } else {
                     printer.informInvalid();
@@ -82,7 +82,6 @@ public class ServerController {
             }
         }
     }
-
 
     private String getBoardAsString() {
         String output = "";
@@ -98,10 +97,12 @@ public class ServerController {
         return output;
     }
 
-    private void checkForEndOfGame() throws IOException {
+    private boolean isEndOfGame() throws IOException {
         if (checkForDraw() || checkIfAnySideWon()) {
             gameState = END_OF_GAME;
+            return true;
         }
+        return false;
     }
 
     private boolean checkForDraw() throws IOException {
@@ -117,7 +118,7 @@ public class ServerController {
         String check = game.checkForWinConditions();
         if (check.equals("X")) {
             printer.informPlayerXWin();
-            server.writeToUser("WON X\n");
+            server.writeToUser("WON X " + getBoardAsString() + "\n");
             return true;
         }
         if (check.equals("O")) {
